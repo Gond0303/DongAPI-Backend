@@ -1,0 +1,34 @@
+# 应用服务 WEB 访问端口
+server:
+  address: 0.0.0.0
+  port: 7529
+  servlet:
+    context-path: /api
+    session:
+      cookie:
+        domain: api.dckeji.top
+#        same-site: lax
+#        secure: false
+#    context-path: /frend
+#       解决cookie不能用，因为设置了 secure 属性的 cookie 只能用 https 协议发送给服务器，而我服务器目前只能使用 http 协议，所以导致 cookie 设置不成功
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/dongapi
+    username: dongapi
+    password: 20010303
+  # session过期时间1天86400秒
+  session:
+    timeout: 86400
+    # session整合redis，使用redis
+    store-type: redis
+  # redis整合
+  redis:
+    port: 6379
+    database: 0
+    host: localhost
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: false
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl

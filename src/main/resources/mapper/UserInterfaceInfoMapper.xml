@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dong.project.mapper.UserInterfaceInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.dong.dongapicommon.model.entity.UserInterfaceInfo">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="userId" column="userId" jdbcType="BIGINT"/>
+            <result property="interfaceInfoId" column="interfaceInfoId" jdbcType="BIGINT"/>
+            <result property="totalInvokes" column="totalInvokes" jdbcType="BIGINT"/>
+            <result property="status" column="status" jdbcType="INTEGER"/>
+            <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
+            <result property="isDeleted" column="isDeleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,userId,interfaceInfoId,
+        totalInvokes,status,
+        createTime,updateTime,isDeleted
+    </sql>
+
+<!--    自定义sql，查询接口调用次数TOP3-->
+    <select id="ListTopInvokeInterfaceInfo" resultType="com.dong.dongapicommon.model.entity.UserInterfaceInfo">
+        select interfaceInfoId, sum(totalInvokes) as totalInvokes
+        from user_interface_info
+        group by interfaceInfoId
+        order by totalInvokes desc
+        limit 3
+    </select>
+</mapper>
